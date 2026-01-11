@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.2.21"
+    kotlin("jvm") version "2.3.0"
     id("application")
     id("com.gradleup.shadow") version "8.3.6"
 }
@@ -13,13 +13,13 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("ch.qos.logback:logback-classic:1.5.6")
+    implementation("ch.qos.logback:logback-classic:1.5.13")
     implementation("net.dv8tion:JDA:6.2.1")
     implementation("org.json:json:20251224")
 }
 
 kotlin {
-    jvmToolchain(22)
+    jvmToolchain(25)
 }
 
 tasks.test {
