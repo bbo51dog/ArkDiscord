@@ -22,30 +22,42 @@ class ArkRconClient private constructor(
     }
 
     fun getOnlinePlayers(): List<String>? {
-        if (!isOnline()) return null
-        val response = rcon.exec(RconCommand.LIST_PLAYERS)
-        val names = mutableListOf<String>()
+        try {
+            val response = rcon.exec(RconCommand.LIST_PLAYERS)
+            val names = mutableListOf<String>()
 
-        for (line in response.lines()) {
-            val m = Regex("""\d+\.\s*.*?,\s*(\d{17})""").find(line) ?: continue
-            val id = m.groupValues[1].toLong()
-            names += steam.getPlayerName(id)
+            for (line in response.lines()) {
+                val m = Regex("""\d+\.\s*.*?,\s*(\d{17})""").find(line) ?: continue
+                val id = m.groupValues[1].toLong()
+                names += steam.getPlayerName(id)
+            }
+            return names
+        } catch (e: Exception) {
+            return null
         }
-        return names
     }
 
     fun getMap(): String? {
-        if (!isOnline()) return null
-        return rcon.exec(RconCommand.GET_MAP).trim()
+        return try {
+            rcon.exec(RconCommand.GET_MAP).trim()
+        } catch (e: Exception) {
+            null
+        }
     }
 
     fun getVersion(): String? {
-        if (!isOnline()) return null
-        return rcon.exec(RconCommand.GET_VERSION).trim()
+        return try {
+             rcon.exec(RconCommand.GET_VERSION).trim()
+        } catch (e: Exception) {
+            null
+        }
     }
 
     fun getDay(): Int? {
-        if (!isOnline()) return null
-        return rcon.exec(RconCommand.GET_DAY).trim().toInt()
+        return try {
+            rcon.exec(RconCommand.GET_DAY).trim().toInt()
+        } catch (e: Exception) {
+            null
+        }
     }
 }

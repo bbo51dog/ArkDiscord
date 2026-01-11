@@ -97,7 +97,6 @@ class RconGateway(
     }
 
     private fun execCommand(cmd: String): String {
-        println(cmd)
         if (!isConnected()) error("RCON not connected")
 
         val id = ++reqId
