@@ -86,7 +86,7 @@ class RconGateway(
                 return res
             } catch (e: Exception) {
                 lastError = e
-                close()
+                connect()
 
                 if (attempt < retry - 1) {
                     Thread.sleep(interval)
