@@ -15,6 +15,7 @@ class EventListener(
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         when (event.name) {
             "status" -> {
+                event.deferReply().queue()
                 val eb = EmbedBuilder()
                 eb.setAuthor("\uD83E\uDD96BboArk\uD83E\uDD95")
                     .setDescription("Status of BboArk server.")
@@ -30,7 +31,7 @@ class EventListener(
                         .setColor(Color.RED)
                         .setTimestamp(Instant.now())
                 }
-                event.replyEmbeds(eb.build()).setEphemeral(false).queue()
+                event.hook.editOriginalEmbeds(eb.build()).queue()
             }
             else -> event.reply("Unknown command").setEphemeral(false).queue()
         }
